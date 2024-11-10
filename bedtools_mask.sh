@@ -7,6 +7,8 @@
 #SBATCH -o slurm-%A_%a.out
 
 module load bedtools/2.30.0 
+module load bwa/0.7.17
+
 
 for file_name in AGLY AGOS APIS DNOX DPLA DVIT ELAN MCER MPER PNIG RMAI RPAD SMIS
 do 
@@ -23,6 +25,9 @@ do
         filtered_fasta=$path/${file_name}_${TE_class}.masked.fasta
 
         bedtools maskfasta -fi $fasta -bed $filtered_gff -fo $filtered_fasta
+
+        bwa index $filtered_fasta
+
 
     done
 done
